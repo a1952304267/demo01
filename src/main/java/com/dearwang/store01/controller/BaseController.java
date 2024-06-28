@@ -5,6 +5,8 @@ import com.dearwang.store01.service.ex.*;
 import com.dearwang.store01.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpSession;
+
 //控制层类基类，抛出异常
 public class BaseController {
 //    操作成功的状态码
@@ -29,5 +31,14 @@ public class BaseController {
             result.setMessage("注册时产生了未知错误");
         }
         return result;
+    }
+    //    可以使用protected定义仅当前包内对象能够使用
+    //    定义session对象获取session对象中的id
+    public final Integer getUidFromSession(HttpSession session){
+       return Integer.valueOf(session.getAttribute("uid").toString());
+    }
+    //    定义session对象获取session对象中的当前登录的username
+    public final Integer getUsernameFromSession(HttpSession session){
+        return Integer.valueOf(session.getAttribute("username").toString());
     }
 }

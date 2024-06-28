@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 //@Controller与@requestbody混合为下面这个注解
 @RestController
 @RequestMapping("users")
@@ -48,8 +50,16 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping("login")
-    public JsonResult<User> login(String username, String password) {
+    public JsonResult<User> login(String username, String password, HttpSession session) {
         User data = userService.login(username, password);
+        /*向session对象完成全局的数据绑定*/
+        session.setAttribute("uid",data.getUid());
+        session.setAttribute("username",data.getUsername());
+
+        /*获取绑定的数据*/
+        System.out.println(getUidFromSession(session));
+        System.out.println(getUsernameFromSession(session));
+
         return new JsonResult<User>(OK,data);
     }
 }

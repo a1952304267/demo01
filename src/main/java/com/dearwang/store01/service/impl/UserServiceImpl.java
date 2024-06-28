@@ -81,9 +81,9 @@ public class UserServiceImpl implements IUserService {
 
 //        与用户传递过来的密码进行比较，获取盐值与md5规则进行加密
         String salt = result.getSalt();
-        String newMd5Password = getMD5Password(password, salt);
-//        比较
-        if (newMd5Password.equals(oldPassword)) {
+        String newMd5Password = getMD5Password(password,salt);
+//        比较equals相等equalsIgnoreCase忽略大小写startsWith和endsWith检查对应开头与对应结尾
+        if (!newMd5Password.equals(oldPassword)) {
             throw new PasswordNotMatchException("密码输入错误");
         }
 //        判断是否被删除is_delete字段
