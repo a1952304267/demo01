@@ -1,11 +1,17 @@
 package com.dearwang.store01.entity;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 //实体类基类
-//@Data
+@Data
+@EqualsAndHashCode(callSuper = false)
+@ToString
 public class BaseEntity implements Serializable {
     private String createdUser;
     private Date createdTime;
@@ -13,6 +19,7 @@ public class BaseEntity implements Serializable {
     private Date modifiedTime;
 
 
+/*
 
     public String getCreatedUser() {
         return createdUser;
@@ -71,4 +78,5 @@ public class BaseEntity implements Serializable {
                 ", modifiedTime=" + modifiedTime +
                 '}';
     }
+*/
 }

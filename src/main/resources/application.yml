@@ -2,6 +2,8 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    用于连接H2数据库
+#    driver-class-name: org.h2.Driver
     url: jdbc:mysql://localhost:3305/store?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
     username: root
     password: 123123
@@ -13,16 +15,26 @@ spring:
       max-request-size: 30MB #设置上传文件的总大小
 
 #配置mybatis配置
-mybatis:
+#mybatis:
+#  type-aliases-package: top.year21.computerstore.entity
+#  mapper-locations:  classpath*:com/dearwang/store01/mapper/*Mapper.xml
+#  configuration:
+#    #开启在mybatis处理过程中打印出对应的sql语句功能
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    #开启数据库字段自动转换为驼峰命名
+#    map-underscore-to-camel-case: true
+
+mybatis-plus:
   type-aliases-package: top.year21.computerstore.entity
+#  自己配置好自己的mapper层接口
   mapper-locations:  classpath*:com/dearwang/store01/mapper/*Mapper.xml
   configuration:
     #开启在mybatis处理过程中打印出对应的sql语句功能
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     #开启数据库字段自动转换为驼峰命名
     map-underscore-to-camel-case: true
+
 #配置分页插件
-#照着写就行，别问为什么
 pagehelper:
   dialect: mysql
   reasonable: true
@@ -39,4 +51,9 @@ server:
 #  filePath: /home/files/computer/
 
 
+#mybatis-plus的H2配置
+#sql:
+#  init:
+#    schema-locations: classpath:db/schema-h2.sql
+#    data-locations: classpath:db/data-h2.sql
 

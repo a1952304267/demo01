@@ -20,7 +20,8 @@ public class LoginInterceptor implements HandlerInterceptor {
                              Object handler) throws Exception {
 //        HttpServletRequest获取session对象
         Object obj = request.getSession().getAttribute("uid");
-        if (obj == null) {/*为空代表没有登录uid，则跳转到登录页*/
+        if (obj == null) {
+            /*为空代表没有登录uid，则跳转到登录页*/
             response.sendRedirect("/web/login.html");
 //            结束后续前端调用
             return false;

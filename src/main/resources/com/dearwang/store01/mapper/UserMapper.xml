@@ -4,14 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dearwang.store01.mapper.UserMapper">
     <!--   直接编写SQL语句-->
-<!--    自定义指定规则:resultMap  分配ID值规则名称
-        Type取值为类
-  -->
+    <!--    自定义指定规则:resultMap  分配ID值规则名称
+            Type取值为类
+      -->
     <resultMap id="UserEntityMap" type="com.dearwang.store01.entity.User">
-<!--        将表的字段与类的字段属性不一致的字段名进行匹配制定-->
-<!--        coluwm表示表中字段名
-            property表示类中的字段，不可以省略主键名
--->
+        <!--        将表的字段与类的字段属性不一致的字段名进行匹配制定-->
+        <!--        coluwm表示表中字段名
+                    property表示类中的字段，不可以省略主键名
+        -->
         <result column="uid" property="uid"></result>
         <result column="is_delete" property="isDelete"></result>
         <result column="created_user" property="createdUser"></result>
@@ -20,10 +20,10 @@
         <result column="modified_time" property="modifiedTime"></result>
     </resultMap>
 
-<!--    useGeneratedKeys开启字段自增，keyProperty
-        表示哪个字段为主键并进行递增
--->
-    <insert id="insert"  useGeneratedKeys="true" keyProperty="uid">
+    <!--    useGeneratedKeys开启字段自增，keyProperty
+            表示哪个字段为主键并进行递增
+    -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="uid">
         INSERT INTO t_user (
         username, password, salt, phone, email, gender, avatar,
         is_delete, created_user, created_time, modified_user, modified_time
@@ -33,12 +33,23 @@
     )
 
     </insert>
-<!--查询语句执行时，查询单个对象获单个对象
-    多个对象指示:resultType指定查询的返回结果集
-     自定义指定规则:resultMap应用于字段与对象属性字段名称不一致
--->
+    <!--查询语句执行时，查询单个对象获单个对象
+        多个对象指示:resultType指定查询的返回结果集
+         自定义指定规则:resultMap应用于字段与对象属性字段名称不一致
+    -->
     <select id="findByUsername" resultMap="UserEntityMap">
         SELECT * FROM t_user WHERE username = #{username}
     </select>
-
+<!--更新字段-->
+    <update id="updatePasswordByUid">
+        UPDATE t_user SET
+          password=#{password},
+          modified_user=#{modifiedUser},
+          modified_time=#{modifiedTime}
+        where uid =${uid}
+    </update>
+    <!--更新字段时判定是否用户ID存在-->
+    <select id="findByUid" resultMap="UserEntityMap">
+        SELECT * FROM  t_user WHERE uid = #{uid}
+    </select>
 </mapper>

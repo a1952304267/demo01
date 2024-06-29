@@ -1,14 +1,25 @@
 package com.dearwang.store01.entity;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-//省略@Component
-//springboot约定大于配置
+
+
+
 //用户实体类.
-@Component
+//springboot约定大于配置
+/**@Data表示用lombok来自动生成get set方法
+**EqualsAndHashCode表示自动生成equals和hashcode方法
+**toString表示自动生成string方法
+**省略@Component注解***/
+@Data
+@EqualsAndHashCode(callSuper = false)
+@ToString
 public class User extends BaseEntity implements Serializable {
     private Integer uid;
     private String username;
@@ -22,7 +33,7 @@ public class User extends BaseEntity implements Serializable {
 
     //1.get和set方法2.equals和hashCode()方法,toString方法
 
-
+/*
     public Integer getUid() {
         return uid;
     }
@@ -132,5 +143,5 @@ public class User extends BaseEntity implements Serializable {
                 ", avatar='" + avatar + '\'' +
                 ", isDelete=" + isDelete +
                 '}';
-    }
+    }*/
 }

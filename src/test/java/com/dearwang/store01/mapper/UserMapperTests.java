@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
+
 //标记为测试类
 @SpringBootTest
 //启动单元测试类，需要传参必须是SpringRunner实例类型class
@@ -38,4 +40,19 @@ public class UserMapperTests {
         User user = userMapper.findByUsername("tim");
         System.out.println(user);
     }
+    /*单元测试不可以有参数列表*/
+    @Test
+    public void updatePasswordByUid(){
+
+        userMapper.updatePasswordByUid(
+                46,
+                "321",
+                "管理员",
+                new Date());
+    }
+    @Test
+    public void findByUid(){
+        System.out.println(userMapper.findByUid(46));
+    }
+
 }

@@ -17,7 +17,6 @@ import java.util.UUID;
 //用户模块的实现类
 @Service//@Service将当前对象交给spring来管理
 public class UserServiceImpl implements IUserService {
-
     @Autowired
     private UserMapper userMapper;
 
