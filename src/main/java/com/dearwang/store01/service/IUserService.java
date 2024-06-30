@@ -11,9 +11,16 @@ import com.dearwang.store01.entity.User;
 //    boolean result = IUserService.save(user);
 public interface IUserService {
 
-//    用户注册方法 user用户的数据对象
+    //    用户注册方法 user用户的数据对象
     void reg(User user);
-//    登录时的数据对象
-    User login(String username,String password);
 
+    //    登录时的数据对象
+    User login(String username, String password);
+
+
+    //更新时的数据对象
+    void changePassword(Integer uid,
+                        String username,
+                        String oldPassword,
+                        String newPassword);
 }

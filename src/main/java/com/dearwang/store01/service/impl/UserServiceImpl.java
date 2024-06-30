@@ -6,6 +6,7 @@ import com.dearwang.store01.mapper.UserMapper;
 import com.dearwang.store01.service.IUserService;
 import com.dearwang.store01.service.ex.InsertException;
 import com.dearwang.store01.service.ex.PasswordNotMatchException;
+import com.dearwang.store01.service.ex.UpdateException;
 import com.dearwang.store01.service.ex.UsernameNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,7 @@ public class UserServiceImpl implements IUserService {
 
 
     }
+
     //    方法重写,登录方法
     @Override
     public User login(String username, String password) {
@@ -80,7 +82,7 @@ public class UserServiceImpl implements IUserService {
 
 //        与用户传递过来的密码进行比较，获取盐值与md5规则进行加密
         String salt = result.getSalt();
-        String newMd5Password = getMD5Password(password,salt);
+        String newMd5Password = getMD5Password(password, salt);
 //        比较equals相等equalsIgnoreCase忽略大小写startsWith和endsWith检查对应开头与对应结尾
         if (!newMd5Password.equals(oldPassword)) {
             throw new PasswordNotMatchException("密码输入错误");
@@ -97,6 +99,40 @@ public class UserServiceImpl implements IUserService {
 //        user.setPassword(result.getPassword());
 //      返回数据
         return user;
+    }
+
+
+    //    更新数据操作
+    /**
+     *
+     * @param uid 根据用户id查找是否存在,并进行对应id的用户的密码更改
+     * @param username 更新时的用户名——谁处理的这个更新密码时的操作
+     * @param oldPassword 更新时的老密码
+     * @param newPassword 更新时的新密码
+     */
+    @Override
+    public void changePassword(Integer uid,
+                               String username,
+                               String oldPassword,
+                               String newPassword) {
+        User result = userMapper.findByUid(uid);
+//        比较原密码与数据库中密码
+        if (result == null || result.getIsDelete() == 1) {
+            throw new UsernameNotFoundException("用户不存在");
+        }
+        String oldMd5Password = getMD5Password(oldPassword, result.getSalt());
+        if (!result.getPassword().equals(oldMd5Password)) {
+            throw new PasswordNotMatchException("密码错误");
+        }
+//       保存新密码，并进行加密
+        String newMd5Password = getMD5Password(newPassword,result.getSalt());
+        Integer rows = userMapper.updatePasswordByUid(uid,
+                                                      newMd5Password,
+                                                      username,
+                                                      new Date());
+        if (rows!=1){
+            throw new UpdateException("数据更新时产生了未知错误");
+        }
     }
 
     //    定义一个md5算法加密方法

@@ -7,11 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Date;
 
-//用户模块接口-持久层mapper层
+//用户模块接口-持久层
 //描写SQL语句的抽象方法
 //@Mapper
 //继承mybatis-plus
-@Mapper
 public interface UserMapper extends BaseMapper<User> {
     //    插入用户信息表User数据
 //    返回受影响的行数

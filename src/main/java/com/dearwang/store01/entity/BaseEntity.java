@@ -15,7 +15,7 @@ import java.util.Objects;
 public class BaseEntity implements Serializable {
     private String createdUser;
     private Date createdTime;
-    private  String modifiedUser;
+    private String modifiedUser;
     private Date modifiedTime;
 
 

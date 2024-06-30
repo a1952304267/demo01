@@ -8,6 +8,7 @@ import com.dearwang.store01.service.ex.UsernameDuplicatedException;
 import com.dearwang.store01.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -61,5 +62,15 @@ public class UserController extends BaseController {
         System.out.println(getUsernameFromSession(session));
 
         return new JsonResult<User>(OK,data);
+    }
+
+//这里使用根据UID来修改对应的pwd，我开始用的post请求，后更改为request请求，应该这里使用get请求也是可以的
+    @RequestMapping("update_pwd")
+    public JsonResult<Void> changePassword(String oldPassword,String newPassword,
+                                           HttpSession session){
+        Integer uid = getUidFromSession(session);
+        String username = getUsernameFromSession(session);
+        userService.changePassword(uid,username,oldPassword,newPassword);
+        return new JsonResult<Void>(OK);
     }
 }

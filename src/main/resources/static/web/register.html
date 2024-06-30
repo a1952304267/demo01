@@ -44,6 +44,7 @@
 					let name = $("#username").val();
 					let pwd = $("#password").val();
 					let rePwd = $("#rePwd").val();
+					/*注释掉了验证码界面，后续增加该接口*/
 					// let codeStr = $("#code").val();
 					//去掉验证码前后空格
 					// codeStr = $.trim(codeStr);
@@ -60,7 +61,7 @@
 					let username = $("#username").val();
 
 					if (!(nameCheck.test(username))){
-						$("#error-msg").text("用户名必须是5-12位的字母和数字");
+						$("#error-msg").text("用户名必须在5-12位内的字母或数字");
 						return false;
 					}else {
 						$("#error-msg").empty()
@@ -70,7 +71,7 @@
 					let passCheck = /^\w{5,12}$/;
 					let password = $("#password").val();
 					if (!passCheck.test(password)){
-						$("#error-msg").text("密码必须是5-12位的字母和数字");
+						$("#error-msg").text("密码必须在5-12位内");
 						return false;
 					}else {
 						$("#error-msg").empty()

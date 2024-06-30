@@ -28,7 +28,10 @@ public class BaseController {
             result.setMessage("用户名密码错误");
         }else if (e instanceof InsertException){
             result.setState(5000);
-            result.setMessage("注册时产生了未知错误");
+            result.setMessage("用户名已被注册或出现了未知异常");
+        }else if (e instanceof UpdateException){
+            result.setState(5003);
+            result.setMessage("更新密码时产生了未知错误");
         }
         return result;
     }
@@ -38,7 +41,7 @@ public class BaseController {
        return Integer.valueOf(session.getAttribute("uid").toString());
     }
     //    定义session对象获取session对象中的当前登录的username
-    public final Integer getUsernameFromSession(HttpSession session){
-        return Integer.valueOf(session.getAttribute("username").toString());
+    public final String getUsernameFromSession(HttpSession session){
+        return String.valueOf(session.getAttribute("username").toString());
     }
 }

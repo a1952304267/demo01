@@ -2,6 +2,7 @@ package com.dearwang.store01.mapper;
 
 
 import com.dearwang.store01.entity.User;
+import com.dearwang.store01.service.IUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,19 @@ public class UserMapperTests {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private IUserService iUserService;
+
     @Test
     public void insert() {
         User user = new User();
-        user.setUsername("tim123");
-        user.setPassword("tim123");
+        user.setUsername("text");
+        user.setPassword("123");
 
-        userMapper.insert(user);
-        Integer rows = userMapper.insert(user);
-        System.out.println(rows);
+        iUserService.reg(user);
+//        此处调用应该为业务层的接口，而不是持久层接口
+//        Integer rows = userMapper.insert(user);
+        System.out.println(user);
 //        必须为@Test修饰
 //    返回值必须是void
 //    方法参数列表不指定任何
@@ -39,11 +44,12 @@ public class UserMapperTests {
     public void findByUsername() {
         User user = userMapper.findByUsername("tim");
         System.out.println(user);
-    }
+}
     /*单元测试不可以有参数列表*/
     @Test
     public void updatePasswordByUid(){
 
+//        iUserService.changePassword(51);
         userMapper.updatePasswordByUid(
                 46,
                 "321",
@@ -55,4 +61,11 @@ public class UserMapperTests {
         System.out.println(userMapper.findByUid(46));
     }
 
+    @Test
+    public void changePassword(){
+        iUserService.changePassword(51,
+                "管理员",
+                "123",
+                "1234");
+    }
 }
