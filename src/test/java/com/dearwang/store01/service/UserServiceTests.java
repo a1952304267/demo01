@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
+
 //标记为测试类
 @SpringBootTest
 //启动单元测试类，需要传参必须是SpringRunner实例类型class
@@ -43,4 +45,22 @@ public class UserServiceTests {
         System.out.println(user);
     }
 
+    @Test
+    public void getByUid(){
+        System.err.println();userService.getByUid(51);
+    }
+    @Test
+    public void changeInfo(){
+        /*userService.changeInfo(51,
+                "管理员",
+                "1234"
+                );*/
+        User user = new User();
+//        user.setUid(51);
+        user.setPhone("13900000001");
+        user.setEmail("text@mi.com");
+        user.setGender(0);
+//        user.setModifiedTime(new Date());
+        userService.changeInfo(51,"管理员",user);
+    }
 }

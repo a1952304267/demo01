@@ -40,8 +40,15 @@ public class UserController extends BaseController {
 //
 //    }
 
-//    接收数据方式：请求处理方法设置为pojo类型来接受前端的数据，springboot会将前端的url地址将pojo类中的属性进行比较
+    //    接收数据方式：请求处理方法设置为pojo类型来接受前端的数据，springboot会将前端的url地址将pojo类中的属性进行比较
 //    2.请求数据类型参数列表设置为非pojo类型，如string类型，springboot会直接将请求的参数名和方法的参数名进行比较
+
+    @RequestMapping("getUid")
+    public JsonResult<User> getByUid(HttpSession session) {
+        User data = userService.getByUid(getUidFromSession(session));
+        return new JsonResult<>(OK, data);
+    }
+
     @RequestMapping("reg")
     public JsonResult<Void> reg(User user) {
 //        创建响应结果对象
@@ -54,23 +61,33 @@ public class UserController extends BaseController {
     public JsonResult<User> login(String username, String password, HttpSession session) {
         User data = userService.login(username, password);
         /*向session对象完成全局的数据绑定*/
-        session.setAttribute("uid",data.getUid());
-        session.setAttribute("username",data.getUsername());
+        session.setAttribute("uid", data.getUid());
+        session.setAttribute("username", data.getUsername());
 
         /*获取绑定的数据*/
         System.out.println(getUidFromSession(session));
         System.out.println(getUsernameFromSession(session));
 
-        return new JsonResult<User>(OK,data);
+        return new JsonResult<User>(OK, data);
     }
 
-//这里使用根据UID来修改对应的pwd，我开始用的post请求，后更改为request请求，应该这里使用get请求也是可以的
+    //这里使用根据UID来修改对应的pwd，我开始用的post请求，后更改为request请求，应该这里使用get请求也是可以的
     @RequestMapping("update_pwd")
-    public JsonResult<Void> changePassword(String oldPassword,String newPassword,
-                                           HttpSession session){
+    public JsonResult<Void> changePassword(String oldPassword, String newPassword,
+                                           HttpSession session) {
         Integer uid = getUidFromSession(session);
         String username = getUsernameFromSession(session);
-        userService.changePassword(uid,username,oldPassword,newPassword);
+        userService.changePassword(uid, username, oldPassword, newPassword);
         return new JsonResult<Void>(OK);
+    }
+
+    @RequestMapping("update_user")
+    public JsonResult<Void> changeInfo(HttpSession session,User user){
+
+        /*实际编程中需注意实体类对象是否与前端对象相同*/
+        Integer uid = getUidFromSession(session);
+        String username = getUsernameFromSession(session);
+        userService.changeInfo(uid,username,user);
+        return new JsonResult<>(OK);
     }
 }

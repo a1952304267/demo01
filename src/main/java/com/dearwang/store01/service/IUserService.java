@@ -23,4 +23,10 @@ public interface IUserService {
                         String username,
                         String oldPassword,
                         String newPassword);
+
+    //    查询用户数据
+    User getByUid(Integer uid);
+
+    //    更新用户数据时的数据对象
+    void changeInfo(Integer uid, String username, User user);
 }

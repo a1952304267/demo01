@@ -22,9 +22,10 @@
 
 		<!--	js代码	-->
 		<script type="text/javascript">
-
-			//在网页加载完成后执行
-			$(function () {
+			//此处不需要点击事件，打开页面便可自动执行
+			//document表示整个页面，即，当前页面任何元素被处罚都会启动该Ajax
+			//此处原代码为"$(function(){"
+			$(document).ready(function () {
 				//引入公共头部、中间导航条以及页脚
 				$(".header").load("components/head.html")
 				$(".footer").load("components/footer.html")
@@ -32,16 +33,17 @@
 
 				//在页面完成之后自动发送ajax请求
 				$.ajax({
-					url : "/user/queryUser" ,
+					url : "/users/getUid" ,
 					type: "get",
 					dataType: "json",
-					success: function (res) {
-						if (res.status === 200){
-							$("#username").val(res.data.username) //修改用户名
-							$("#phone").val(res.data.phone) //修改电话
-							$("#email").val(res.data.email) //修改邮箱
+					success: function (json) {
+						if (json.state == 200){
+							$("#username").val(json.data.username) //当前用户名
+							$("#phone").val(json.data.phone) //当前电话
+							$("#email").val(json.data.email) //当前邮箱
+							// $("#gender").val(json.data.gender)/*当前性别*/
 							//修改性别
-							if (res.data.gender === 0){
+							if (json.data.gender == 0){
 								//prop()表示给某个元素添加属性和属性值
 								$("#gender-female").prop("checked","checked")
 							}else{
@@ -50,7 +52,7 @@
 						}
 					},
 					error: function (error) {
-						alert("服务器出现故障，请等待攻城狮修复！！")
+						alert(error.status+"出现了未知错误！")
 					}
 				});
 
@@ -76,23 +78,23 @@
 							return false;
 						}
 						$.ajax({
-							url : "/user/updateInfo",
+							url : "/users/update_user",
 							type: "post",
 							data: $("#form-change-info").serialize(),//获取表单的所有内容
 							dataType: "json",
-							success: function (res) {
-								if (res.status === 200){
+							success: function (json) {
+								if (json.state == 200){
 									alert("修改成功！")
 									//将回传的用户信息进行更新
-									sessionStorage.setItem("user",JSON.stringify(res.data))
+									// sessionStorage.setItem("user",JSON.stringify(json.data))
 									//网页刷新
 									location.reload();
 								}else {
-									$("#error-msg").html(res.message);
+									$("#error-msg").html(json.message);
 								}
 							},
 							error: function (error) {
-								alert("服务器出现故障，请等待攻城狮修复！！")
+								alert(error.status+"服务器出现错误!!!")
 							}
 						});
 					}

@@ -32,4 +32,10 @@ public interface UserMapper extends BaseMapper<User> {
     //     根据用户名查找
     User findByUsername(String username);
 
+    /**
+     * 更新用户个人信息
+     * @param user 根据uid更新
+     * @return 返回受影响的行数
+     */
+    Integer updateInfoByUid(User user);
 }

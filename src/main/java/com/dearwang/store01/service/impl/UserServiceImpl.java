@@ -96,17 +96,17 @@ public class UserServiceImpl implements IUserService {
         user.setUid(result.getUid());
         user.setUsername(result.getUsername());
         user.setAvatar(result.getAvatar());
-//        user.setPassword(result.getPassword());
+        user.setPassword(result.getPassword());
 //      返回数据
         return user;
     }
 
 
     //    更新数据操作
+
     /**
-     *
-     * @param uid 根据用户id查找是否存在,并进行对应id的用户的密码更改
-     * @param username 更新时的用户名——谁处理的这个更新密码时的操作
+     * @param uid         根据用户id查找是否存在,并进行对应id的用户的密码更改
+     * @param username    更新时的用户名——谁处理的这个更新密码时的操作
      * @param oldPassword 更新时的老密码
      * @param newPassword 更新时的新密码
      */
@@ -125,13 +125,48 @@ public class UserServiceImpl implements IUserService {
             throw new PasswordNotMatchException("密码错误");
         }
 //       保存新密码，并进行加密
-        String newMd5Password = getMD5Password(newPassword,result.getSalt());
+        String newMd5Password = getMD5Password(newPassword, result.getSalt());
         Integer rows = userMapper.updatePasswordByUid(uid,
-                                                      newMd5Password,
-                                                      username,
-                                                      new Date());
-        if (rows!=1){
+                newMd5Password,
+                username,
+                new Date());
+        if (rows != 1) {
             throw new UpdateException("数据更新时产生了未知错误");
+        }
+    }
+
+    /*根据当前有户名查询当前的用户信息*/
+    @Override
+    public User getByUid(Integer uid) {
+        User result = userMapper.findByUid(uid);
+        if (result == null || result.getIsDelete() == 1) {
+            throw new UsernameNotFoundException("用户数据不存在");
+        }
+        User user = new User();
+        user.setUsername(result.getUsername());
+        user.setPhone(result.getPhone());
+        user.setEmail(result.getEmail());
+        user.setGender(result.getGender());/*性别*/
+
+        /*return result;*/
+        return user;
+    }
+
+    /*更改当前用户的信息*/
+    @Override
+    public void changeInfo(Integer uid, String username, User user) {
+        User result = userMapper.findByUid(uid);/*调用方法前先确定用户是否存在*/
+        if (result == null || result.getIsDelete() == 1) {
+            throw new UsernameNotFoundException("用户数据不存在");
+        }
+        user.setUid(uid);
+        //user.setUsername(username);/*数据已经有了*/
+        user.setModifiedUser(username);
+        user.setModifiedTime(new Date());/*此处获取当前时间，但时区出现错误*/
+
+        Integer rows = userMapper.updateInfoByUid(user);
+        if (rows != 1) {
+            throw new UpdateException("数据更新时产生错误");
         }
     }
 

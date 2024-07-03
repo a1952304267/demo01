@@ -1,10 +1,14 @@
 spring:
+#  设置时区，这里已经在jdbc中设置了
+#  jackson:
+#    time-zone: Asia/Shanghai
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
 #    用于连接H2数据库
 #    driver-class-name: org.h2.Driver
-    url: jdbc:mysql://localhost:3305/store?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+#    url中的serverTimezone字段设置为当前时间，此前使用的是UTC国际时间
+    url: jdbc:mysql://localhost:3305/store?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
     username: root
     password: 123123
   #文件上传的相关设置
@@ -56,4 +60,5 @@ server:
 #  init:
 #    schema-locations: classpath:db/schema-h2.sql
 #    data-locations: classpath:db/data-h2.sql
+
 

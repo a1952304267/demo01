@@ -34,6 +34,19 @@
             <version>3.5.7</version>
         </dependency>
 
+        <!--引入MyBatis-Plus的代码生成器，3.5.7最新版本优化了界面和代码-->
+        <!--<dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.5.7</version>
+        </dependency>-->
+        <!--生成源代码、HTML、XML代码自动生成模版-->
+        <!--<dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.3</version>
+        </dependency>-->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>

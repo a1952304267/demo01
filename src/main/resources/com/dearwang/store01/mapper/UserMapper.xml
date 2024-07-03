@@ -40,7 +40,7 @@
     <select id="findByUsername" resultMap="UserEntityMap">
         SELECT * FROM t_user WHERE username = #{username}
     </select>
-<!--更新字段-->
+    <!--更新字段-->
     <update id="updatePasswordByUid">
         UPDATE t_user SET
           password=#{password},
@@ -52,4 +52,15 @@
     <select id="findByUid" resultMap="UserEntityMap">
         SELECT * FROM  t_user WHERE uid = #{uid}
     </select>
+    <!--更新用户的个人信息，包含以下字段-->
+    <!--此处if标签引入判断 test则是条件语句  语句间的逗号不可省略-->
+    <update id="updateInfoByUid">
+        UPDATE t_user SET
+        <if test="phone!=null">phone = #{phone},</if>
+        <if test="email!=null">email = #{email},</if>
+        <if test="gender!=null">gender = #{gender},</if>
+        modified_user=#{modifiedUser},
+        modified_time=#{modifiedTime}
+        WHERE uid = ${uid}
+    </update>
 </mapper>
