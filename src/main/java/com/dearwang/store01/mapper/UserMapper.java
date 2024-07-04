@@ -4,6 +4,7 @@ package com.dearwang.store01.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dearwang.store01.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 
@@ -38,4 +39,20 @@ public interface UserMapper extends BaseMapper<User> {
      * @return 返回受影响的行数
      */
     Integer updateInfoByUid(User user);
+
+    /**
+     * 根据用户的uid来修改用户头像
+     * @param uid
+     * @param avatar 用户的头像字段
+     * @param modifiedUser
+     * @param modifiedTime
+     * @return 返回受影响的行数
+     * //@Param 表示指定sql语句中字段名与当前方法定义的对象对应绑定,相同可以省略，不同则强行匹配
+     * 这里省略其他三个字段的@Param注解
+     * !与SQL语句中的#{}占位符中的字段名对应
+     */
+    Integer updateAvatarByUid(@Param("uid") Integer uid,
+                              String avatar,
+                              String modifiedUser,
+                              Date modifiedTime);
 }

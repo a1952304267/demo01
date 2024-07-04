@@ -26,7 +26,7 @@
 			function afterFromSubmit(){
 				//阻止表单的默认跳转行为，并在ajax请求后进行重定向
 				$("#avatar").ajaxSubmit(function () {
-					alert("上传成功")
+					alert("上传成功!")
 					//页面重定向，防止表单重复提交
 					location.href = "upload.html"
 				})
@@ -42,21 +42,21 @@
 
 				//网页加载完成之前自动发送ajax请求
 				$.ajax({
-					url: "/user/queryUser",
+					url: "/users/upload_avatar",
 					type: "get",
 					dataType: "json",
-					success:function (res) {
+					success:function (json) {
 							//判断用户是首次注册还是老用户
-							if (res.data.avatar !== null &&res.data.avatar !== ""   ){
+							if (json.data.avatar !== null &&json.data.avatar !== ""   ){
 								//设置用户头像
-								$("#img-avatar").attr("src",res.data.avatar)
+								$("#img-avatar").attr("src",json.data.avatar)
 							}else{
 								//设置为默认头像
 								$("#img-avatar").attr("src","../images/index/user.jpg")
 							}
 					},
 					error:function (err) {
-						alert(err.message())
+						alert(err.message("产生错误了！"))
 					}
 				})
 			})
@@ -126,8 +126,10 @@
 					</ul>
 					<div class="panel-body">
 						<!--上传头像表单开始-->
+						<!--enctype="multipart/form-data"若使用表单直接进行文件上传则需要声明该属性
+							不会将目标文件的数据结构修改之后再上传-->
 						<form id="avatar"
-							  action="/file"
+							  action="/users/upload_avatar"
 							  method="post"
 							  enctype="multipart/form-data"
 							  onsubmit="return afterFromSubmit()"

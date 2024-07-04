@@ -3,6 +3,7 @@ package com.dearwang.store01.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dearwang.store01.entity.User;
+import org.apache.ibatis.annotations.Param;
 
 //用户模块的业务层接口
 //注释掉的是mybatis-plus的继承类
@@ -29,4 +30,12 @@ public interface IUserService {
 
     //    更新用户数据时的数据对象
     void changeInfo(Integer uid, String username, User user);
+
+
+    //    用户上传头像时候的数据对象
+    void changeAvatar(Integer uid,
+                      String avatar,
+                      String username);
+
 }
+

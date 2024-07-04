@@ -40,17 +40,19 @@ public class UserServiceTests {
     }
 
     @Test
-    public void login(){
-       User user= userService.login("admin","123456");
+    public void login() {
+        User user = userService.login("admin", "123456");
         System.out.println(user);
     }
 
     @Test
-    public void getByUid(){
-        System.err.println();userService.getByUid(51);
+    public void getByUid() {
+        System.err.println();
+        userService.getByUid(51);
     }
+
     @Test
-    public void changeInfo(){
+    public void changeInfo() {
         /*userService.changeInfo(51,
                 "管理员",
                 "1234"
@@ -61,6 +63,13 @@ public class UserServiceTests {
         user.setEmail("text@mi.com");
         user.setGender(0);
 //        user.setModifiedTime(new Date());
-        userService.changeInfo(51,"管理员",user);
+        userService.changeInfo(51, "管理员", user);
+    }
+
+    @Test
+    public void updateAvatarByUid() {
+//        User user = new User();
+//        user.setAvatar("text/test.png");
+        userService.changeAvatar(51, "text/test.png", "管理员2");
     }
 }

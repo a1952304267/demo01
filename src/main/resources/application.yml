@@ -1,13 +1,13 @@
 spring:
-#  设置时区，这里已经在jdbc中设置了
-#  jackson:
-#    time-zone: Asia/Shanghai
+  #  设置时区，这里已经在jdbc中设置了
+  #  jackson:
+  #    time-zone: Asia/Shanghai
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    用于连接H2数据库
-#    driver-class-name: org.h2.Driver
-#    url中的serverTimezone字段设置为当前时间，此前使用的是UTC国际时间
+    #    用于连接H2数据库
+    #    driver-class-name: org.h2.Driver
+    #    url中的serverTimezone字段设置为当前时间，此前使用的是UTC国际时间
     url: jdbc:mysql://localhost:3305/store?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
     username: root
     password: 123123
@@ -30,7 +30,7 @@ spring:
 
 mybatis-plus:
   type-aliases-package: top.year21.computerstore.entity
-#  自己配置好自己的mapper层接口
+  #  自己配置好自己的mapper层接口
   mapper-locations:  classpath*:com/dearwang/store01/mapper/*Mapper.xml
   configuration:
     #开启在mybatis处理过程中打印出对应的sql语句功能
@@ -49,7 +49,16 @@ server:
   #本地项目的写法
   port: 8080
   ip: 127.0.0.1
-#  部署服务器的写法
+
+  #确定tomcat的默认存储位置，！！未测试
+  #  tomcat:
+  #    accesslog:
+  #      enabled: true
+  #      directory: ...
+  #      pattern: [%{cipher}t] %{cipher}h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i"
+  #      suffix: .log
+  #      prefix: tomcat-access
+  #  部署服务器的写法
 #  ip: 服务器ip地址
 #  port: 8080
 #  filePath: /home/files/computer/

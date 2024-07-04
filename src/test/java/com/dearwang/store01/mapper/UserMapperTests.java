@@ -44,10 +44,11 @@ public class UserMapperTests {
     public void findByUsername() {
         User user = userMapper.findByUsername("tim");
         System.out.println(user);
-}
+    }
+
     /*单元测试不可以有参数列表*/
     @Test
-    public void updatePasswordByUid(){
+    public void updatePasswordByUid() {
 
 //        iUserService.changePassword(51);
         userMapper.updatePasswordByUid(
@@ -56,13 +57,14 @@ public class UserMapperTests {
                 "管理员",
                 new Date());
     }
+
     @Test
-    public void findByUid(){
+    public void findByUid() {
         System.out.println(userMapper.findByUid(46));
     }
 
     @Test
-    public void changePassword(){
+    public void changePassword() {
         iUserService.changePassword(51,
                 "管理员",
                 "123",
@@ -70,7 +72,7 @@ public class UserMapperTests {
     }
 
     @Test
-    public void updateInfoByUid(){
+    public void updateInfoByUid() {
         User user = new User();
         user.setUid(51);
         user.setPhone("13971561561");
@@ -78,5 +80,14 @@ public class UserMapperTests {
         user.setGender(1);
         user.setModifiedTime(new Date());
         userMapper.updateInfoByUid(user);
+    }
+
+    @Test
+    public void updateAvatarByUid() {
+        userMapper.updateAvatarByUid(
+                51,
+                "test",
+                "管理员",
+                new Date());
     }
 }
