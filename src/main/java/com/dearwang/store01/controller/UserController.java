@@ -47,7 +47,6 @@ public class UserController extends BaseController {
     }
 
 
-
 //此处请求可获取数据太少，复用性太低
     /*@RequestMapping("getUid")
     public JsonResult<User> getByUid(HttpSession session) {
@@ -55,7 +54,7 @@ public class UserController extends BaseController {
         return new JsonResult<>(OK, data);
     }*/
 
-//    该请求保存了用户的部分重要数据，后续可以通过添加user获取的对象来增加所需数据
+    //    该请求保存了用户的部分重要数据，后续可以通过添加user获取的对象来增加所需数据
     @RequestMapping("queryUser")
     public JsonResult<User> queryUser(HttpSession session) {
         Integer uid = getUidFromSession(session);
@@ -154,7 +153,8 @@ public class UserController extends BaseController {
         String oldFileName = file.getOriginalFilename();
         int index = oldFileName.lastIndexOf(".");//查找最后一个"."存在的位置,并记录保存
         String suffix = oldFileName.substring(index);//从index位置来截取文件类型，index之前的字段全部截断
-        String newFileName = UUID.randomUUID().toString().toUpperCase() + suffix;
+//        String newFileName = UUID.randomUUID().toString().toUpperCase() + suffix;
+        String newFileName = UUID.randomUUID().toString() + suffix;
         File createFile = new File(dir, newFileName);//表示在dir目录下创建名为newFileName的空文件
 //        写入空文件
         try {
@@ -167,8 +167,9 @@ public class UserController extends BaseController {
         Integer uid = getUidFromSession(session);
         String username = getUsernameFromSession(session);
 //        返回头像的路径/upload/value.value
-        String avatar = dir + newFileName;
-        userService.changeAvatar(uid, parent, username);
+        String avatar =dir+"/"+ newFileName;
+//        这里有个错误，之前传送过去的是parent这会导致后台只有路径名没有图片名
+        userService.changeAvatar(uid, avatar, username);
 //        返回用户头像路径
         return new JsonResult<>(OK, avatar);
     }

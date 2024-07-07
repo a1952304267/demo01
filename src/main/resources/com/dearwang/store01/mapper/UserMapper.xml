@@ -70,7 +70,7 @@
         SET
             avatar = #{avatar},
             modified_user=#{modifiedUser},
-            modified_time=#{modifiedTime}
+            modified_time=#{mo difiedTime}
         WHERE
             uid = #{uid}
     </update>

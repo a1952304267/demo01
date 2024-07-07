@@ -20,7 +20,7 @@ spring:
 
 #配置mybatis配置
 #mybatis:
-#  type-aliases-package: top.year21.computerstore.entity
+#  type-aliases-package: com.dearwang.store01.entity
 #  mapper-locations:  classpath*:com/dearwang/store01/mapper/*Mapper.xml
 #  configuration:
 #    #开启在mybatis处理过程中打印出对应的sql语句功能
@@ -29,9 +29,10 @@ spring:
 #    map-underscore-to-camel-case: true
 
 mybatis-plus:
-  type-aliases-package: top.year21.computerstore.entity
-  #  自己配置好自己的mapper层接口
-  mapper-locations:  classpath*:com/dearwang/store01/mapper/*Mapper.xml
+  #此处扫描自己的配置环境包下所有的类
+  type-aliases-package: com.dearwang.store01.entity
+  #  自己配置好自己的mapper层接口，之前用的*Mapper.xml，这里改成全部了
+  mapper-locations:  classpath*:com/dearwang/store01/mapper/*.xml
   configuration:
     #开启在mybatis处理过程中打印出对应的sql语句功能
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

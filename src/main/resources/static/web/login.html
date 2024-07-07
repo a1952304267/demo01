@@ -51,7 +51,10 @@
 								//前往首页
 								window.location.href="index.html";
 								//将用户信息存入session域中
-								sessionStorage.setItem("user",JSON.stringify(res.data));
+								sessionStorage.setItem("user",JSON.stringify(json.data));
+							//	将服务器获取到的头像数据保存打cookie中,expires存活时间7天
+								$.cookie("avatar",json.data.avatar,{expires:7});
+								console.log(json.data.avatar);
 							}else {
 								$("#error-msg").html(json.message)
 							}

@@ -143,11 +143,12 @@ public class UserServiceImpl implements IUserService {
             throw new UsernameNotFoundException("用户数据不存在");
         }
         User user = new User();
+        user.setUid(result.getUid());
         user.setUsername(result.getUsername());
         user.setPhone(result.getPhone());
         user.setEmail(result.getEmail());
         user.setGender(result.getGender());/*性别*/
-
+        user.setAvatar(result.getAvatar());/*头像地址*/
         /*return result;*/
         return user;
     }
