@@ -18,23 +18,29 @@ public interface UserMapper extends BaseMapper<User> {
 //    User user = new User();
     int insert(User user);
 //    int update(User password);
+
     /**
      * 根据uid查找修改password
-     * @param uid 获取用户的id
-     * @param password 用户输入的新密码
-     * @param modifiedUser  修改的执行者，谁修改
-     * @param modifiedTime  修改数据的时间
+     *
+     * @param uid          获取用户的id
+     * @param password     用户输入的新密码
+     * @param modifiedUser 修改的执行者，谁修改
+     * @param modifiedTime 修改数据的时间
      * @return 返回受影响的行数
      */
     Integer updatePasswordByUid(Integer uid, String password,
                                 String modifiedUser,
                                 Date modifiedTime);
-    User findByUid(Integer uid);/*查找UID数据对象*/
+
+    /*查找UID数据对象*/
+    User findByUid(Integer uid);
+
     //     根据用户名查找
     User findByUsername(String username);
 
     /**
      * 更新用户个人信息
+     *
      * @param user 根据uid更新
      * @return 返回受影响的行数
      */
@@ -42,8 +48,9 @@ public interface UserMapper extends BaseMapper<User> {
 
     /**
      * 根据用户的uid来修改用户头像
+     *
      * @param uid
-     * @param avatar 用户的头像字段
+     * @param avatar       用户的头像字段
      * @param modifiedUser
      * @param modifiedTime
      * @return 返回受影响的行数

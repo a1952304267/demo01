@@ -1,38 +1,29 @@
-package com.dearwang.store01.mapper;
+package com.dearwang.store01.service;
+
 
 import com.dearwang.store01.entity.Address;
 import com.dearwang.store01.entity.User;
-import com.dearwang.store01.service.IUserService;
+import com.dearwang.store01.service.ex.ServiceException;
+import com.dearwang.store01.service.impl.UserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Date;
-
 //标记为测试类
 @SpringBootTest
 //启动单元测试类，需要传参必须是SpringRunner实例类型class
 @RunWith(SpringRunner.class)
-public class AddressTests {
+public class AddressServiceTests {
     @Autowired
-    private AddressMapper addressMapper;
+    private IAddressService addressService;
 
     @Test
-    public void insert() {
+    public void addNewAddress() {
         Address address = new Address();
-        address.setUid(99);
-        address.setPhone("12300000000");
-        address.setAddname("女朋友");
-        addressMapper.insert(address);
-        System.out.println(address);
+        address.setPhone("12300001111");
+        address.setAddname("礼物");
+        addressService.addNewAddress(address,99,"管理员");
     }
-
-    @Test
-    public void countByUid() {
-        Integer count = addressMapper.countByUid(9);
-        System.out.println(count);
-    }
-
 }

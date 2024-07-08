@@ -34,6 +34,7 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         patterns.add("/web/product.html");
         patterns.add("/users/reg");
         patterns.add("/users/login");
+        patterns.add("/district/**");
         patterns.add("/web/components/**");
 
 //        完成注册

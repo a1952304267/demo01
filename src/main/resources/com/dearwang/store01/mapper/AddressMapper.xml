@@ -5,7 +5,7 @@
     <resultMap id="queryAddress" type="address">
         <id property="aid" column="aid"/>
         <!--<result property="uid" column="uid"/>
-        <result property="tname" column="tname"/>-->
+        <result property="name" column="name"/>-->
         <!--字段名一致可忽略-->
         <result property="provinceName" column="province_name"/>
         <result property="provinceCode" column="province_code"/>
@@ -28,11 +28,11 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="aid">
         insert into t_address(
-                    uid,tname,province_name,province_code,city_name,city_code,area_name,
+                    uid,addname,province_name,province_code,city_name,city_code,area_name,
 					area_code,zip,address,phone,tel,tag,is_default,created_user,created_time,
                     modified_user,modified_time)
                 values(
-                    #{uid},#{tname},#{provinceName},#{provinceCode},#{cityName},
+                    #{uid},#{addname},#{provinceName},#{provinceCode},#{cityName},
                     #{cityCode},#{areaName},#{areaCode},#{zip},#{address},#{phone},
                     #{tel},#{tag},#{isDefault},#{createdUser},#{createdTime},
                     #{modifiedUser},#{modifiedTime})

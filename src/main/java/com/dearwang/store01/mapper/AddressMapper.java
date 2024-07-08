@@ -6,7 +6,7 @@ import com.dearwang.store01.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /*收货地址持久层接口*/
-@Mapper
+//@Mapper
 public interface AddressMapper extends BaseMapper<User> {
     /**
      * 插入用户收货地址数据

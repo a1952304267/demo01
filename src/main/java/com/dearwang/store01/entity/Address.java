@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class Address extends BaseEntity implements Serializable {
     private Integer aid;
     private Integer uid;
-    private String tname;
+    private String addname;
     private String provinceName;
     private String provinceCode;
     private String cityName;

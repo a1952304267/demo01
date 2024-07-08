@@ -2,6 +2,7 @@ package com.dearwang.store01.controller;
 
 
 import com.dearwang.store01.service.ex.*;
+import com.dearwang.store01.service.ex.address.AddressCountLimitException;
 import com.dearwang.store01.service.ex.avatar.*;
 import com.dearwang.store01.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,6 +26,9 @@ public class BaseController {
         if (e instanceof UsernameDuplicatedException) {
             result.setState(4000);
             result.setMessage("用户名已经被注册");
+        } else if (e instanceof AddressCountLimitException) {
+            result.setState(4001);
+            result.setMessage("收货地址数量超过上线");
         } else if (e instanceof UsernameNotFoundException) {
             result.setState(5001);
             result.setMessage("用户数据没找到");
