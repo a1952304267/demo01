@@ -2,8 +2,10 @@ package com.dearwang.store01.service.impl;
 
 
 import com.dearwang.store01.entity.Address;
+import com.dearwang.store01.entity.District;
 import com.dearwang.store01.mapper.AddressMapper;
 import com.dearwang.store01.service.IAddressService;
+import com.dearwang.store01.service.IDistrictService;
 import com.dearwang.store01.service.ex.InsertException;
 import com.dearwang.store01.service.ex.address.AddressCountLimitException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ import java.util.Date;
 public class AddressServiceImpl implements IAddressService {
     @Autowired
     private AddressMapper addressMapper;
+    /*要使该业务能够都添加地址信息，需要调用地址的业务层接口服务*/
+    @Autowired
+    private IDistrictService districtService;
 
     @Value("${user.address.max-count}")
     private Integer maxCount;
@@ -29,6 +34,16 @@ public class AddressServiceImpl implements IAddressService {
         if (count >= maxCount) {
             throw new AddressCountLimitException("用户数据超出限制");
         }
+
+        /*对address对象进行补全*/
+        String provinceName = districtService.getNameByCode(address.getProvinceCode());
+        String cityName = districtService.getNameByCode(address.getCityCode());
+        String areaName = districtService.getNameByCode(address.getAreaCode());
+        address.setProvinceName(provinceName);
+        address.setCityName(cityName);
+        address.setAreaName(areaName);
+
+
         /*补全日志*/
         address.setUid(uid);
         Integer isDefault = count == 0 ? 1 : 0;//1默认地址，0不默认
@@ -39,7 +54,7 @@ public class AddressServiceImpl implements IAddressService {
         address.setCreatedTime(new Date());
         /*插入地址*/
         Integer rows = addressMapper.insert(address);
-        if (rows !=1){
+        if (rows != 1) {
             throw new InsertException("插入时发生了错误");
         }
     }

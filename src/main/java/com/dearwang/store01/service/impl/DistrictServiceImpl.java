@@ -25,4 +25,9 @@ public class DistrictServiceImpl implements IDistrictService {
         }
         return districts;
     }
+
+    @Override
+    public String getNameByCode(String code) {
+        return districtMapper.findNameByCode(code);
+    }
 }

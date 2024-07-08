@@ -2,6 +2,7 @@ package com.dearwang.store01.service;
 
 
 import com.dearwang.store01.entity.Address;
+import com.dearwang.store01.entity.District;
 import com.dearwang.store01.entity.User;
 import com.dearwang.store01.service.ex.ServiceException;
 import com.dearwang.store01.service.impl.UserServiceImpl;
@@ -18,9 +19,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class AddressServiceTests {
     @Autowired
     private IAddressService addressService;
+    @Autowired
+    private IDistrictService districtService;
 
     @Test
     public void addNewAddress() {
+        District district =new District();
         Address address = new Address();
         address.setPhone("12300001111");
         address.setAddname("礼物");

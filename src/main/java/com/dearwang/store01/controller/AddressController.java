@@ -1,6 +1,7 @@
 package com.dearwang.store01.controller;
 
 import com.dearwang.store01.entity.Address;
+import com.dearwang.store01.entity.District;
 import com.dearwang.store01.service.IAddressService;
 import com.dearwang.store01.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
