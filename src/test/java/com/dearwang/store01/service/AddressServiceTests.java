@@ -23,11 +23,29 @@ public class AddressServiceTests {
     private IDistrictService districtService;
 
     @Test
-    public void addNewAddress() {
-        District district =new District();
-        Address address = new Address();
-        address.setPhone("12300001111");
-        address.setAddname("礼物");
-        addressService.addNewAddress(address,99,"管理员");
+   public void addNewAddress() {
+            District district =new District();
+            Address address = new Address();
+            address.setPhone("12300001111");
+            address.setAddname("礼物");
+            addressService.addNewAddress(address,99,"管理员");
     }
+    @Test
+    public void setDefault() {
+        addressService.setDefault(15,12,"管理员");
+    }
+    @Test
+    public void deleteAddress() {
+      addressService.deleteAddress(23,51,"管理员");
+    }
+
+    @Test
+    public void updateAddress() {
+//        District district =new District();
+        Address address = new Address();
+        address.setPhone("11111122222");
+        address.setAddname("礼物");
+        addressService.updateAddress(address,24,"管理员");
+    }
+
 }

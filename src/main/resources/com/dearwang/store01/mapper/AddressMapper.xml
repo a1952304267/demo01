@@ -42,4 +42,53 @@
     <select id="countByUid" resultType="java.lang.Integer">
         SELECT  count(*) from t_address WHERE uid=#{uid}
     </select>
+
+    <!--降序排序-->
+    <select id="findByUid" resultMap="queryAddress">
+        SELECT * FROM  t_address WHERE uid = #{uid}
+        ORDER BY is_default DESC ,created_time DESC
+    </select>
+    <!--设置所有收货地址为非默认-->
+    <update id="updateNonDefault">
+        UPDATE t_address SET is_default = 0 WHERE  uid = #{uid}
+    </update>
+
+    <update id="updateDefault">
+        UPDATE t_address SET is_default = 1,modified_user=#{modifiedUser},
+                             modified_time=#{modifiedTime}
+        WHERE  aid = #{aid}
+    </update>
+
+    <update id="updateAddress">
+        UPDATE t_address SET    uid=#{uid},
+                                addname=#{addname},
+                                province_name=#{provinceName},
+                                province_code=#{provinceCode},
+                                city_name=#{cityName},
+                                city_code=#{cityCode},
+                                area_name=#{areaName},
+                                area_code=#{areaCode},
+                                zip=#{zip},
+                                address=#{address},
+                                phone=#{phone},
+                                tel=#{tel},
+                                tag=#{tag},
+                                modified_user=#{modifiedUser},
+                                modified_time=#{modifiedTime}
+        WHERE  aid = #{aid}
+    </update>
+
+    <select id="findByAid" resultMap="queryAddress">
+        SELECT * FROM t_address WHERE aid = #{aid}
+    </select>
+
+    <delete id="deleteByAid">
+        DELETE  FROM t_address WHERE aid = #{aid}
+    </delete>
+
+    <!--返回的对象只要是对象类型都需要设置结果集映射-->
+    <select id="findNewModifiedTime" resultMap="queryAddress">
+        SELECT * FROM t_address WHERE uid = #{uid}
+        ORDER BY modified_time ASC LIMIT 0,1
+    </select>
 </mapper>

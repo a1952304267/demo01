@@ -31,12 +31,12 @@
 			var aid = decodeURI(param[1]);
 			//在页面加载完成时自动发送此ajax请求并填充表单
 			$.ajax({
-				url: "/address/queryOneAddress",
+				url: "/address",
 				type: "get",
 				data: "aid=" + aid,
 				dataType: "json",
-				success:function (res) {
-					let address = res.data
+				success:function (json) {
+					let address = json.data
 					let provinceStr = "<option value="+ address.provinceCode + ">"+ address.provinceName + "</option>"
 					let cityStr = "<option value="+ address.cityCode + ">" + address.cityName + "</option>"
 					let areaStr = "<option value="+ address.areaCode + ">" + address.areaName + "</option>"
@@ -79,23 +79,23 @@
 				let str = "";
 				if (provinceCount === 1){ //当count不等于1代表已经查询过了就不再做查询操作
 					$.ajax({
-						url : "/district/parent",
+						url : "/district",
 						type: "get",
 						data:  "parent=86",
 						dataType: "json",
-						success: function (res) {
+						success: function (json) {
 							//清空省份列表并添加默认值
 							$("#province-list").empty().append(provinceFirst)
 							//成功之后将数据填充回下列列表当中
-							for (let i= 0;i < res.data.length;i++){
+							for (let i= 0;i < json.data.length;i++){
 								//每一个district对象
-								let district = res.data[i]
+								let district = json.data[i]
 								str = "<option value=" + district.code +  ">"+ district.name + "</option>"
 								$("#province-list").append(str)
 							}
 						},
 						error: function () {
-							alert("查询省份列表出错，请等待攻城狮修复！！")
+							alert("查询省份列表出错！！")
 						}
 					})
 				}
@@ -124,15 +124,15 @@
 
 					let str = ""; //拼接元素所用的字符串
 					$.ajax({
-						url : "/district/parent",
+						url : "/district",
 						type: "get",
 						data:  "parent=" + provinceChoose,
 						dataType: "json",
-						success: function (res) {
+						success: function (json) {
 						//成功之后将数据填充回下列列表当中
-						for (i= 0;i < res.data.length;i++){
+						for (i= 0;i < json.data.length;i++){
 							//每一个district对象
-							let district = res.data[i]
+							let district = json.data[i]
 							str = "<option value=" + district.code +  ">"+ district.name + "</option>"
 							$("#city-list").append(str)
 						}
@@ -154,22 +154,22 @@
 					let str = "";
 					if (cityCount === 1){//当count不等于1代表已经查询过了就不再做查询操作
 					$.ajax({
-						url : "/district/parent",
+						url : "/district",
 						type: "get",
 						data:  "parent=" + provinceChoose,
 						dataType: "json",
-						success: function (res) {
+						success: function (json) {
 							//成功之后将数据填充回下列列表当中
 							$("#city-list").empty().append(cityFirst)
-							for (i= 0;i < res.data.length;i++){
+							for (i= 0;i < json.data.length;i++){
 								//每一个district对象
-								let district = res.data[i]
+								let district = json.data[i]
 								str = "<option value=" + district.code +  ">"+ district.name + "</option>"
 								$("#city-list").append(str)
 							}
 						},
 							error: function () {
-								alert("查询城市列表出错，请等待攻城狮修复！！")
+								alert("查询城市列表出错！！")
 							}
 						})
 					}
@@ -191,21 +191,21 @@
 
 					let str = "";
 					$.ajax({
-						url : "/district/parent",
+						url : "/district",
 						type: "get",
 						data:  "parent=" + cityChoose,
 						dataType: "json",
-						success: function (res) {
+						success: function (json) {
 							//成功之后将数据填充回下列列表当中
-							for (i= 0;i < res.data.length;i++){
+							for (i= 0;i < json.data.length;i++){
 								//每一个district对象
-								let district = res.data[i]
+								let district = json.data[i]
 								str = "<option value=" + district.code +  ">"+ district.name + "</option>"
 								$("#area-list").append(str)
 							}
 						},
 						error: function () {
-							alert("查询区列表出错，请等待攻城狮修复！！")
+							alert("查询区列表出错！！")
 						}
 					})
 				})
@@ -220,16 +220,16 @@
 					let str = "";
 					if (areaCount === 1){
 					$.ajax({
-						url : "/district/parent",
+						url : "/district",
 						type: "get",
 						data:  "parent=" + cityChoose,
 						dataType: "json",
-						success: function (res) {
+						success: function (json) {
 							//成功之后将数据填充回下列列表当中
 							$("#area-list").empty().append(areaFirst)
-							for (i= 0;i < res.data.length;i++){
+							for (i= 0;i < json.data.length;i++){
 								//每一个district对象
-								let district = res.data[i]
+								let district = json.data[i]
 								str = "<option value=" + district.code +  ">"+ district.name + "</option>"
 								$("#area-list").append(str)
 							}
@@ -257,22 +257,26 @@
 						return false;
 					}
 					//验证手机号是否符合要求
-					let checkPhone = /^[1][3,4,5,7,8][0-9]{9}$/;
+					let checkPhone = /^[1][0-9][0-9]{9}$/;
 					if (!checkPhone.test(phone)){
 						$("#error-msg").html("手机号不符合要求！");
 						return false;
 					}
 					$.ajax({
-						url : "/address/updateAddress",
+						url : "/address/update",
 						type: "post",
 						data: $("#form-update-address").serialize(), //获取表单的所有内容
 						dataType: "json",
-						success: function () {
+						success: function (json) {
+							if (json.state==200){
 								alert("修改成功！")
 								location.href = "address.html"
+							}else {
+								alert("修改失败")
+							}
 						},
 						error: function () {
-							alert("服务器出现故障，修改失败，请等待攻城狮修复！！")
+							alert("服务器出现故障，修改失败！！")
 						}
 					})
 				})

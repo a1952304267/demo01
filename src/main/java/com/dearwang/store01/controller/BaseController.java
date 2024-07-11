@@ -2,7 +2,10 @@ package com.dearwang.store01.controller;
 
 
 import com.dearwang.store01.service.ex.*;
+import com.dearwang.store01.service.ex.address.AccessDeniedException;
 import com.dearwang.store01.service.ex.address.AddressCountLimitException;
+import com.dearwang.store01.service.ex.address.AddressNotFoundException;
+import com.dearwang.store01.service.ex.address.DeleteException;
 import com.dearwang.store01.service.ex.avatar.*;
 import com.dearwang.store01.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,7 +32,16 @@ public class BaseController {
         } else if (e instanceof AddressCountLimitException) {
             result.setState(4001);
             result.setMessage("收货地址数量超过上线");
-        } else if (e instanceof UsernameNotFoundException) {
+        } else if (e instanceof AccessDeniedException) {
+            result.setState(4002);
+            result.setMessage("数据请求异常");
+        } else if (e instanceof AddressNotFoundException) {
+            result.setState(4003);
+            result.setMessage("收货地址不存在");
+        }else if (e instanceof DeleteException) {
+            result.setState(4004);
+            result.setMessage("删除地址时产生错误");
+        }  else if (e instanceof UsernameNotFoundException) {
             result.setState(5001);
             result.setMessage("用户数据没找到");
         } else if (e instanceof PasswordNotMatchException) {
